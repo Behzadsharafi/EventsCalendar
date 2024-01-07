@@ -4,7 +4,7 @@ import Calendar from "./components/Calendar";
 
 export default function Home() {
   return (
-    <main>
+    <main className="flex flex-col items-center ">
       <Link href="/users">Users</Link>
       <ProductCard />
       <Calendar />

@@ -1,13 +1,18 @@
 import Link from "next/link";
 import ProductCard from "./components/ProductCard";
 import Calendar from "./components/Calendar";
+import Head from "next/head";
 
 export default function Home() {
   return (
-    <main className="flex flex-col items-center ">
-      <Link href="/users">Users</Link>
-      <ProductCard />
-      <Calendar />
-    </main>
+    <>
+      <Head>
+        {" "}
+        <title>fsdsdffsd</title>{" "}
+      </Head>
+      <main className="flex flex-col items-center ">
+        <Calendar />
+      </main>
+    </>
   );
 }

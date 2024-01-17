@@ -1,14 +1,21 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { dateObject, generateCalendar } from "../utils/generateCalendar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import Modal from "./Modal";
+import { dummyEvents } from "../data/events";
+import { event } from "./../data/events";
 
 const Calendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [modalDate, setModalDate] = useState(new Date());
   const [showModal, setShowModal] = useState(false);
+  const [events, setEvents] = useState<event[]>([]);
+
+  useEffect(() => {
+    setEvents(dummyEvents);
+  }, []);
 
   const daysOfWeek: string[] = [
     "Mon",
@@ -106,6 +113,14 @@ const Calendar = () => {
               key={day.date.toLocaleDateString()}
             >
               {day.date.getDate()}
+              <ul>
+                {events.map((event, index) => {
+                  return event.startDate.toLocaleDateString() ===
+                    day.date.toLocaleDateString() ? (
+                    <li key={index}>{event.name}</li>
+                  ) : null;
+                })}
+              </ul>
             </li>
           ))}
         </ul>

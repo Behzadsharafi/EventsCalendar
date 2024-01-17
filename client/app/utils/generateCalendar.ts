@@ -1,4 +1,4 @@
-interface dateObject {
+export interface dateObject {
   date: Date;
   currentMonth: Boolean;
 }

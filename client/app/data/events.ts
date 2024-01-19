@@ -1,12 +1,6 @@
-export interface event {
-  name: string;
-  startDate: Date;
-  endDate: Date;
-  location: string;
-  label: string;
-}
+import { EventType } from "./../components/Event";
 
-export const dummyEvents: event[] = [
+export const dummyEvents: EventType[] = [
   {
     name: "Team Meeting",
     startDate: new Date(2024, 0, 17, 10, 0),
@@ -31,8 +25,8 @@ export const dummyEvents: event[] = [
   },
   {
     name: "Project Deadline",
-    startDate: new Date(2024, 0, 22, 9, 0),
-    endDate: new Date(2024, 0, 22, 18, 0),
+    startDate: new Date(2024, 0, 22, 18, 0),
+    endDate: new Date(2024, 0, 22, 20, 0),
     location: "Home Office",
     label: "Work",
   },

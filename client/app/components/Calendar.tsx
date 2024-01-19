@@ -5,13 +5,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import Modal from "./Modal";
 import { dummyEvents } from "../data/events";
-import { event } from "./../data/events";
+import Event, { EventType } from "./Event";
+import Day from "./Day";
+import EventForm from "./EventForm";
 
 const Calendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [modalDate, setModalDate] = useState(new Date());
-  const [showModal, setShowModal] = useState(false);
-  const [events, setEvents] = useState<event[]>([]);
+  const [showForm, setShowForm] = useState(false);
+  const [showEvent, setShowEvent] = useState(false);
+  const [events, setEvents] = useState<EventType[]>([]);
+  const [event, setEvent] = useState<EventType | null>(null);
 
   useEffect(() => {
     setEvents(dummyEvents);
@@ -57,8 +61,13 @@ const Calendar = () => {
 
   const handleDateClick = (day: dateObject) => {
     setModalDate(day.date);
-    setShowModal(true);
+    setShowForm(true);
   };
+  const handleEventClick = (event: EventType) => {
+    setShowEvent(true);
+    setEvent(event);
+  };
+
   return (
     <>
       <div className=" flex w-3/5 flex-col gap-y-10  ">
@@ -102,7 +111,7 @@ const Calendar = () => {
           {daysArray.map((day) => (
             <li
               onClick={() => handleDateClick(day)}
-              className={`${"h-28 select-none border-t border-t-gray-400 hover:bg-red-100"} ${
+              className={`${"h-28 select-none border-t border-t-gray-400 hover:bg-red-100 hover:shadow-md "} ${
                 day.currentMonth ? "" : "text-gray-400"
               } ${
                 day.date.toLocaleDateString() ===
@@ -117,7 +126,16 @@ const Calendar = () => {
                 {events.map((event, index) => {
                   return event.startDate.toLocaleDateString() ===
                     day.date.toLocaleDateString() ? (
-                    <li key={index}>{event.name}</li>
+                    <li
+                      className="z-30 w-11/12 transform cursor-pointer rounded-sm  bg-red-200 px-1 transition-all duration-300 hover:scale-95 hover:bg-red-300"
+                      key={index}
+                      onClick={(e) => {
+                        e.stopPropagation(); // Stop propagation here
+                        handleEventClick(event);
+                      }}
+                    >
+                      {event.name}
+                    </li>
                   ) : null;
                 })}
               </ul>
@@ -125,12 +143,15 @@ const Calendar = () => {
           ))}
         </ul>
       </div>
-      {showModal && (
-        <Modal
-          setShowModal={setShowModal}
-          showModal={showModal}
-          date={modalDate}
-        />
+      {showForm && (
+        <Modal setShowModal={setShowForm} showModal={showForm}>
+          <EventForm />
+        </Modal>
+      )}
+      {showEvent && (
+        <Modal setShowModal={setShowEvent} showModal={showEvent}>
+          <Event event={event} />
+        </Modal>
       )}
     </>
   );

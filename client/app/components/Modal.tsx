@@ -1,17 +1,15 @@
-import React, { useEffect } from "react";
+import React, { Children, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 interface props {
-  date: Date;
   showModal: boolean;
   setShowModal: (showModal: boolean) => any;
+  children: React.ReactNode;
 }
 
-const Modal = ({ date, showModal, setShowModal }: props) => {
-  const dateFormat = new Intl.DateTimeFormat("en-au", {
-    dateStyle: "full",
-  });
+const Modal = ({ showModal, setShowModal, children }: props) => {
+
 
   const handleModalClose = () => {
     setShowModal(!showModal);
@@ -42,7 +40,8 @@ const Modal = ({ date, showModal, setShowModal }: props) => {
           className="absolute right-0 top-0 rounded-full p-px hover:bg-red-300 "
           icon={faXmark}
         />
-        {dateFormat.format(new Date(date))}
+        {children}
+      
       </article>
     </>
   );

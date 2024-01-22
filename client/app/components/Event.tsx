@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from "react";
-
-export interface EventType {
-  name: string;
-  startDate: Date;
-  endDate: Date;
-  location: string;
-  label: string;
-}
+import { EventType } from "../utils/interfaces";
 
 interface TimeRemaining {
   days: number;
@@ -17,6 +10,10 @@ interface TimeRemaining {
 
 interface props {
   event: EventType | null;
+  setShowModal: (showModal: boolean) => any;
+  showModal: boolean;
+  setShowEdit: (showEdit: boolean) => any;
+  showEdit: boolean;
 }
 
 const timeUntil = (targetDate: Date): TimeRemaining => {
@@ -39,7 +36,13 @@ const timeUntil = (targetDate: Date): TimeRemaining => {
   };
 };
 
-const Event = ({ event }: props) => {
+const Event = ({
+  event,
+  setShowModal,
+  showModal,
+  showEdit,
+  setShowEdit,
+}: props) => {
   const [remainingTime, setRemainingTime] = useState<TimeRemaining | null>(
     null,
   );
@@ -48,8 +51,8 @@ const Event = ({ event }: props) => {
   const updateRemainingTime = () => {
     if (event) {
       const currentDate = new Date();
-      if (event.startDate > currentDate) {
-        const newRemainingTime = timeUntil(event.startDate);
+      if (new Date(event.startDate) > currentDate) {
+        const newRemainingTime = timeUntil(new Date(event.startDate));
         setRemainingTime(newRemainingTime);
         setEventIsPast(false);
       } else {
@@ -71,6 +74,12 @@ const Event = ({ event }: props) => {
   {
   }
 
+  const handleEditEvent = (event: EventType) => {
+    console.log(event);
+    setShowModal(!showModal);
+    setShowEdit(!showEdit);
+  };
+
   return (
     <div>
       <h2>{event?.name}</h2>
@@ -89,6 +98,14 @@ const Event = ({ event }: props) => {
           {`${remainingTime?.seconds || ""}`} seconds
         </p>
       )}
+      <button
+        className="btn"
+        onClick={() => {
+          if (event) return handleEditEvent(event);
+        }}
+      >
+        Edit
+      </button>
     </div>
   );
 };

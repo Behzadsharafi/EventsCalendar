@@ -2,18 +2,24 @@
 import { useEffect, useState } from "react";
 import { dateObject, generateCalendar } from "../utils/generateCalendar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowRight,
+  faArrowLeft,
+  faHeart,
+} from "@fortawesome/free-solid-svg-icons";
 import Modal from "./Modal";
 import { dummyEvents } from "../data/events";
-import Event, { EventType } from "./Event";
+import Event from "./Event";
 import Day from "./Day";
 import EventForm from "./EventForm";
+import { EventType } from "../utils/interfaces";
 
 const Calendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [modalDate, setModalDate] = useState(new Date());
   const [showForm, setShowForm] = useState(false);
   const [showEvent, setShowEvent] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
   const [events, setEvents] = useState<EventType[]>([]);
   const [event, setEvent] = useState<EventType | null>(null);
 
@@ -34,6 +40,8 @@ const Calendar = () => {
   const dateFormat = new Intl.DateTimeFormat("en-au", {
     dateStyle: "full",
   });
+
+  dateFormat.format(new Date());
 
   const daysArray = generateCalendar(
     currentDate.getMonth(),
@@ -118,13 +126,19 @@ const Calendar = () => {
                 new Date().toLocaleDateString()
                   ? "bg-blue-100 text-red-600"
                   : ""
+              } ${
+                //This part is because my love's birthday is 13th of August and she loves yellow!
+                day.date.getMonth() === 7 && day.date.getDate() === 13
+                  ? "bg-yellow-300"
+                  : ""
               }`}
               key={day.date.toLocaleDateString()}
             >
               {day.date.getDate()}
+
               <ul>
                 {events.map((event, index) => {
-                  return event.startDate.toLocaleDateString() ===
+                  return new Date(event.startDate).toLocaleDateString() ===
                     day.date.toLocaleDateString() ? (
                     <li
                       className="z-30 w-11/12 transform cursor-pointer rounded-sm  bg-red-200 px-1 transition-all duration-300 hover:scale-95 hover:bg-red-300"
@@ -145,12 +159,30 @@ const Calendar = () => {
       </div>
       {showForm && (
         <Modal setShowModal={setShowForm} showModal={showForm}>
-          <EventForm />
+          <EventForm date={modalDate} />
         </Modal>
       )}
       {showEvent && (
         <Modal setShowModal={setShowEvent} showModal={showEvent}>
-          <Event event={event} />
+          <Event
+            event={event}
+            setShowModal={setShowEvent}
+            showModal={showEvent}
+            showEdit={showEdit}
+            setShowEdit={setShowEdit}
+          />
+        </Modal>
+      )}
+      {showEdit && (
+        <Modal setShowModal={setShowEdit} showModal={showEdit}>
+          <EventForm
+            date={modalDate}
+            event={event}
+            setShowModal={setShowEvent}
+            showModal={showEvent}
+            showEdit={showEdit}
+            setShowEdit={setShowEdit}
+          />
         </Modal>
       )}
     </>

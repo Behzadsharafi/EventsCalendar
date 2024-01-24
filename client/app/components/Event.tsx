@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { EventType } from "../utils/interfaces";
+import { EventsContext } from "../context/EventsContextProvider";
 
 interface TimeRemaining {
   days: number;
@@ -10,10 +11,6 @@ interface TimeRemaining {
 
 interface props {
   event: EventType | null;
-  setShowModal: (showModal: boolean) => any;
-  showModal: boolean;
-  setShowEdit: (showEdit: boolean) => any;
-  showEdit: boolean;
 }
 
 const timeUntil = (targetDate: Date): TimeRemaining => {
@@ -36,17 +33,13 @@ const timeUntil = (targetDate: Date): TimeRemaining => {
   };
 };
 
-const Event = ({
-  event,
-  setShowModal,
-  showModal,
-  showEdit,
-  setShowEdit,
-}: props) => {
+const Event = ({ event }: props) => {
   const [remainingTime, setRemainingTime] = useState<TimeRemaining | null>(
     null,
   );
   const [eventIsPast, setEventIsPast] = useState(false);
+  const { setShowEvent, setShowEdit, showEvent, showEdit } =
+    useContext(EventsContext);
 
   const updateRemainingTime = () => {
     if (event) {
@@ -71,12 +64,8 @@ const Event = ({
     dateStyle: "medium",
   });
 
-  {
-  }
-
   const handleEditEvent = (event: EventType) => {
-    console.log(event);
-    setShowModal(!showModal);
+    setShowEvent(!showEvent);
     setShowEdit(!showEdit);
   };
 
@@ -93,9 +82,9 @@ const Event = ({
         <p>
           Event starts in{" "}
           {remainingTime?.days !== undefined ? remainingTime.days : "0"} days{" "}
-          {`${remainingTime?.hours || ""}`} hours{" "}
-          {`${remainingTime?.minutes || ""}`} minutes{" "}
-          {`${remainingTime?.seconds || ""}`} seconds
+          {`${remainingTime?.hours || "0"}`} hours{" "}
+          {`${remainingTime?.minutes || "0"}`} minutes{" "}
+          {`${remainingTime?.seconds || "0"}`} seconds
         </p>
       )}
       <button

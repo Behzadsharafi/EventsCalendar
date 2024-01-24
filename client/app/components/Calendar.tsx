@@ -1,31 +1,29 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { dateObject, generateCalendar } from "../utils/generateCalendar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faArrowRight,
-  faArrowLeft,
-  faHeart,
-} from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import Modal from "./Modal";
-import { dummyEvents } from "../data/events";
 import Event from "./Event";
-import Day from "./Day";
 import EventForm from "./EventForm";
 import { EventType } from "../utils/interfaces";
+import { EventsContext } from "../context/EventsContextProvider";
 
 const Calendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [modalDate, setModalDate] = useState(new Date());
-  const [showForm, setShowForm] = useState(false);
-  const [showEvent, setShowEvent] = useState(false);
-  const [showEdit, setShowEdit] = useState(false);
-  const [events, setEvents] = useState<EventType[]>([]);
-  const [event, setEvent] = useState<EventType | null>(null);
 
-  useEffect(() => {
-    setEvents(dummyEvents);
-  }, []);
+  const {
+    events,
+    setShowForm,
+    setShowEvent,
+    setEvent,
+    showForm,
+    showEvent,
+    showEdit,
+    event,
+    setShowEdit,
+  } = useContext(EventsContext);
 
   const daysOfWeek: string[] = [
     "Mon",
@@ -164,25 +162,12 @@ const Calendar = () => {
       )}
       {showEvent && (
         <Modal setShowModal={setShowEvent} showModal={showEvent}>
-          <Event
-            event={event}
-            setShowModal={setShowEvent}
-            showModal={showEvent}
-            showEdit={showEdit}
-            setShowEdit={setShowEdit}
-          />
+          <Event event={event} />
         </Modal>
       )}
       {showEdit && (
         <Modal setShowModal={setShowEdit} showModal={showEdit}>
-          <EventForm
-            date={modalDate}
-            event={event}
-            setShowModal={setShowEvent}
-            showModal={showEvent}
-            showEdit={showEdit}
-            setShowEdit={setShowEdit}
-          />
+          <EventForm date={modalDate} event={event} />
         </Modal>
       )}
     </>

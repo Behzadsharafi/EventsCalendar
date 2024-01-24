@@ -2,6 +2,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { CreateEventDTO, EventType, UpdateEventDTO } from "../utils/interfaces";
+import { Dispatch, SetStateAction, useContext } from "react";
+import { EventsContext } from "../context/EventsContextProvider";
 
 interface props {
   date: Date;
@@ -10,9 +12,21 @@ interface props {
   showModal?: boolean;
   setShowEdit?: (showEdit: boolean) => any;
   showEdit?: boolean;
+  setEvent?: Dispatch<SetStateAction<EventType | null>>;
 }
 
 const EventForm = ({ date, event }: props) => {
+  const {
+    events,
+    setEvents,
+    setEvent,
+    setShowEdit,
+    showEdit,
+    setShowEvent,
+    showEvent,
+    setShowForm,
+  } = useContext(EventsContext);
+
   const formatDateTime = (date: Date) => {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -50,11 +64,6 @@ const EventForm = ({ date, event }: props) => {
 
   interface FormData extends z.infer<typeof schema> {}
 
-  const formSubmit = async (data: FormData) => {
-    console.log(data);
-    reset();
-  };
-
   const {
     register,
     formState: { errors },
@@ -76,6 +85,54 @@ const EventForm = ({ date, event }: props) => {
     },
     resolver: zodResolver(schema),
   });
+
+  const formSubmit = async (data: FormData) => {
+    const startDate = new Date(data.startDate);
+    const endDate = new Date(data.endDate);
+    if (event) {
+      const updatedEvents = events.map((existingEvent) =>
+        existingEvent.id === event.id
+          ? {
+              ...data,
+              id: event.id,
+              startDate: startDate,
+              endDate: endDate,
+            }
+          : existingEvent,
+      );
+
+      if (setEvent) {
+        setEvent((prevEvent) => {
+          if (prevEvent && prevEvent.id === event.id) {
+            return {
+              ...data,
+              id: event.id,
+              startDate: startDate,
+              endDate: endDate,
+            };
+          }
+          return prevEvent;
+        });
+      }
+
+      setEvents(updatedEvents);
+      setShowEdit(!showEdit);
+      setShowEvent(!showEvent);
+    } else {
+      const newEvent: EventType = {
+        ...data,
+        id: Math.random(),
+        startDate: startDate,
+        endDate: endDate,
+      };
+
+      const updatedEvents = [...events, newEvent];
+      setEvents(updatedEvents);
+      setShowForm(false);
+    }
+
+    reset();
+  };
 
   return (
     <form className="flex flex-col gap-3" onSubmit={handleSubmit(formSubmit)}>

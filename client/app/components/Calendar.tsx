@@ -2,12 +2,17 @@
 import { useContext, useState } from "react";
 import { dateObject, generateCalendar } from "../utils/generateCalendar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowRight,
+  faArrowLeft,
+  faFilter,
+} from "@fortawesome/free-solid-svg-icons";
 import Modal from "./Modal";
 import Event from "./Event";
 import EventForm from "./EventForm";
 import { EventType } from "../utils/interfaces";
 import { EventsContext } from "../context/EventsContextProvider";
+import Filter from "./Filter";
 
 const Calendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -108,6 +113,7 @@ const Calendar = () => {
           </p>
         </section>
 
+        <Filter />
         <ul className="w-100  grid select-none grid-cols-7">
           {daysOfWeek.map((day) => (
             <li key={day}>{day}</li>

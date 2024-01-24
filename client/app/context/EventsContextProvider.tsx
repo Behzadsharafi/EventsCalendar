@@ -14,6 +14,11 @@ interface EventsContextType {
   setShowEdit: React.Dispatch<React.SetStateAction<boolean>>;
   event: EventType | null;
   setEvent: React.Dispatch<React.SetStateAction<EventType | null>>;
+  filterType: string | null;
+  setFilterType: React.Dispatch<React.SetStateAction<string>>;
+  filterValue: string | null;
+  setFilterValue: React.Dispatch<React.SetStateAction<string>>;
+  handleSearch: (filterType: string, filterValue: string) => void;
 }
 
 interface EventsContextProviderProps {
@@ -31,6 +36,11 @@ export const EventsContext = createContext<EventsContextType>({
   setShowEdit: () => {},
   event: null,
   setEvent: () => {},
+  filterType: null,
+  setFilterType: () => {},
+  filterValue: null,
+  setFilterValue: () => {},
+  handleSearch: () => {},
 });
 
 const EventsContextProvider: React.FC<EventsContextProviderProps> = ({
@@ -41,26 +51,52 @@ const EventsContextProvider: React.FC<EventsContextProviderProps> = ({
   const [showEvent, setShowEvent] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
   const [event, setEvent] = useState<EventType | null>(null);
+  const [filterType, setFilterType] = useState("location");
+  const [filterValue, setFilterValue] = useState("");
 
   useEffect(() => {
+    // if (filterType && filterValue) {
+    // setEvents(
+    //   dummyEvents.filter(
+    //     (event) =>
+    //       event[filterType as keyof EventType].toString().toLowerCase() ===
+    //       filterValue.toLowerCase(),
+    //   ),
+    // );
+    // } else {
+    //   setEvents(dummyEvents);
+    // }
+    // if (filterValue === "") {
     setEvents(dummyEvents);
+    // }
   }, []);
 
-  const addEvent = async (data: FormData) => {
-    console.log(data);
+  const handleSearch = (filterType: string, filterValue: string) => {
+    setEvents(
+      dummyEvents.filter(
+        (event) =>
+          event[filterType as keyof EventType].toString().toLowerCase() ===
+          filterValue.toLowerCase(),
+      ),
+    );
   };
 
   const eventsContext: EventsContextType = {
-    events: events,
-    setEvents: setEvents,
-    showForm: showForm,
-    setShowForm: setShowForm,
-    showEvent: showEvent,
-    setShowEvent: setShowEvent,
-    showEdit: showEdit,
-    setShowEdit: setShowEdit,
-    event: event,
-    setEvent: setEvent,
+    events,
+    setEvents,
+    showForm,
+    setShowForm,
+    showEvent,
+    setShowEvent,
+    showEdit,
+    setShowEdit,
+    event,
+    setEvent,
+    filterType,
+    setFilterType,
+    filterValue,
+    setFilterValue,
+    handleSearch,
   };
 
   return (

@@ -9,7 +9,7 @@ public class WebConfig implements WebMvcConfigurer {
 
 	public void addCorsMappings(CorsRegistry registry) {
 
-		String[] allowedOrigins = { "http://localhost:5173/", "http://127.0.0.1:5173/", "http://localhost:3000/" };
+		String[] allowedOrigins = { "http://localhost:5173/", "http://127.0.0.1:5173/", "http://localhost:3000/","https://events-calendar-five.vercel.app/" };
 
 		registry.addMapping("/**").allowedOrigins(allowedOrigins).allowedMethods("GET", "POST", "DELETE", "PATCH")
 				.allowedHeaders("*");

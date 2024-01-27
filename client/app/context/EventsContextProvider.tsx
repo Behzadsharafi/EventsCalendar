@@ -2,6 +2,7 @@
 import React, { createContext, useState, ReactNode, useEffect } from "react";
 import { EventType } from "../utils/interfaces";
 import { dummyEvents } from "../data/events";
+import { getAllEvents } from "../services/event-service";
 
 interface EventsContextType {
   events: EventType[];
@@ -55,30 +56,37 @@ const EventsContextProvider: React.FC<EventsContextProviderProps> = ({
   const [filterValue, setFilterValue] = useState("");
 
   useEffect(() => {
-    // if (filterType && filterValue) {
+    if (filterValue) {
+      getAllEvents()
+        .then((data) => {
+          setEvents(
+            data.filter(
+              (event) =>
+                event[filterType as keyof EventType]
+                  .toString()
+                  .toLowerCase() === filterValue.toLowerCase(),
+            ),
+          );
+        })
+        .catch((error) => console.log(error));
+    } else {
+      getAllEvents()
+        .then((res) => {
+          setEvents(res);
+        })
+        .catch((error) => console.log(error));
+    }
+  }, [filterValue]);
+
+  const handleSearch = (filterType: string, filterValue: string) => {
+    console.log(filterType, filterValue);
     // setEvents(
-    //   dummyEvents.filter(
+    //   events.filter(
     //     (event) =>
     //       event[filterType as keyof EventType].toString().toLowerCase() ===
     //       filterValue.toLowerCase(),
     //   ),
     // );
-    // } else {
-    //   setEvents(dummyEvents);
-    // }
-    // if (filterValue === "") {
-    setEvents(dummyEvents);
-    // }
-  }, []);
-
-  const handleSearch = (filterType: string, filterValue: string) => {
-    setEvents(
-      dummyEvents.filter(
-        (event) =>
-          event[filterType as keyof EventType].toString().toLowerCase() ===
-          filterValue.toLowerCase(),
-      ),
-    );
   };
 
   const eventsContext: EventsContextType = {

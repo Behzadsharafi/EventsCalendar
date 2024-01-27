@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { EventType } from "../utils/interfaces";
 import { EventsContext } from "../context/EventsContextProvider";
+import { deleteEventById, getAllEvents } from "../services/event-service";
 
 interface TimeRemaining {
   days: number;
@@ -38,7 +39,7 @@ const Event = ({ event }: props) => {
     null,
   );
   const [eventIsPast, setEventIsPast] = useState(false);
-  const { setShowEvent, setShowEdit, showEvent, showEdit } =
+  const { setShowEvent, setShowEdit, showEvent, showEdit, setEvents } =
     useContext(EventsContext);
 
   const updateRemainingTime = () => {
@@ -62,11 +63,20 @@ const Event = ({ event }: props) => {
 
   const dateFormat = new Intl.DateTimeFormat("en-au", {
     dateStyle: "medium",
+    timeStyle: "medium",
   });
 
   const handleEditEvent = (event: EventType) => {
     setShowEvent(!showEvent);
     setShowEdit(!showEdit);
+  };
+  const handleDeleteEvent = async (event: EventType) => {
+    await deleteEventById(event.id);
+
+    await getAllEvents().then((events) => {
+      setEvents(events);
+    });
+    setShowEvent(false);
   };
 
   return (
@@ -87,14 +97,24 @@ const Event = ({ event }: props) => {
           {`${remainingTime?.seconds || "0"}`} seconds
         </p>
       )}
-      <button
-        className="btn"
-        onClick={() => {
-          if (event) return handleEditEvent(event);
-        }}
-      >
-        Edit
-      </button>
+      <div>
+        <button
+          className="btn"
+          onClick={() => {
+            if (event) return handleEditEvent(event);
+          }}
+        >
+          Edit
+        </button>
+        <button
+          className="btn"
+          onClick={() => {
+            if (event) return handleDeleteEvent(event);
+          }}
+        >
+          Delete
+        </button>
+      </div>
     </div>
   );
 };

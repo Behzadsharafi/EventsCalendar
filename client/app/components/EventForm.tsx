@@ -2,8 +2,20 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { CreateEventDTO, EventType, UpdateEventDTO } from "../utils/interfaces";
-import { Dispatch, SetStateAction, useContext } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { EventsContext } from "../context/EventsContextProvider";
+import {
+  createEvent,
+  getAllEvents,
+  getEventById,
+  updateEventById,
+} from "../services/event-service";
 
 interface props {
   date: Date;
@@ -16,6 +28,7 @@ interface props {
 }
 
 const EventForm = ({ date, event }: props) => {
+  const [dateError, setDateError] = useState("");
   const {
     events,
     setEvents,
@@ -89,45 +102,65 @@ const EventForm = ({ date, event }: props) => {
   const formSubmit = async (data: FormData) => {
     const startDate = new Date(data.startDate);
     const endDate = new Date(data.endDate);
+    if (startDate.getTime() < new Date().getTime()) {
+      setDateError("The event cannot be in the past");
+      return;
+    }
+    if (startDate.getTime() > endDate.getTime()) {
+      setDateError("Start Date cannot be after End Date");
+      return;
+    }
     if (event) {
-      const updatedEvents = events.map((existingEvent) =>
-        existingEvent.id === event.id
-          ? {
-              ...data,
-              id: event.id,
-              startDate: startDate,
-              endDate: endDate,
-            }
-          : existingEvent,
-      );
-
-      if (setEvent) {
-        setEvent((prevEvent) => {
-          if (prevEvent && prevEvent.id === event.id) {
-            return {
-              ...data,
-              id: event.id,
-              startDate: startDate,
-              endDate: endDate,
-            };
-          }
-          return prevEvent;
-        });
-      }
-
-      setEvents(updatedEvents);
-      setShowEdit(!showEdit);
-      setShowEvent(!showEvent);
-    } else {
-      const newEvent: EventType = {
+      const id = event.id;
+      const toUpdateData: UpdateEventDTO = {
         ...data,
-        id: Math.random(),
         startDate: startDate,
         endDate: endDate,
       };
+      await updateEventById(id, toUpdateData);
 
-      const updatedEvents = [...events, newEvent];
-      setEvents(updatedEvents);
+      await getEventById(id).then((event) => setEvent(event));
+
+      await getAllEvents().then((events) => {
+        setEvents(events);
+      });
+
+      // const updatedEvents = events.map((existingEvent) =>
+      //   existingEvent.id === event.id
+      //     ? {
+      //         ...data,
+      //         id: event.id,
+      //         startDate: startDate,
+      //         endDate: endDate,
+      //       }
+      //     : existingEvent,
+      // );
+
+      // setEvent((prevEvent) => {
+      //   if (prevEvent && prevEvent.id === event.id) {
+      //     return {
+      //       ...data,
+      //       id: event.id,
+      //       startDate: startDate,
+      //       endDate: endDate,
+      //     };
+      //   }
+      //   return prevEvent;
+      // });
+
+      // setEvents(updatedEvents);
+      setShowEdit(!showEdit);
+      setShowEvent(!showEvent);
+    } else {
+      const newEvent: CreateEventDTO = {
+        ...data,
+        startDate: startDate,
+        endDate: endDate,
+      };
+      await createEvent(newEvent);
+      await getAllEvents().then((events) => {
+        setEvents(events);
+      });
       setShowForm(false);
     }
 
@@ -154,21 +187,12 @@ const EventForm = ({ date, event }: props) => {
           {...register("startDate")}
         />
 
-        {errors.startDate && (
-          <p className="text-red-500">{errors.startDate.message}</p>
-        )}
+        {dateError && <p className="text-red-500">{dateError}</p>}
       </div>
       <div className="flex flex-col">
         <label htmlFor="endDate">End Date</label>
-        <input
-          id="endDate"
-          type="datetime-local"
-          {...register("endDate")}
-          defaultValue={getDefaultValue("endDate") as string | undefined}
-        />
-        {errors.endDate && (
-          <p className="text-red-500">{errors.endDate.message}</p>
-        )}
+        <input id="endDate" type="datetime-local" {...register("endDate")} />
+        {dateError && <p className="text-red-500">{dateError}</p>}
       </div>
       <div className="flex flex-col">
         <label htmlFor="location">Location:</label>

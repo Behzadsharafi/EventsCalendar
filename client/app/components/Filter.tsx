@@ -69,15 +69,15 @@ const Filter = () => {
   };
 
   return (
-    <form className="flex items-center gap-1">
-      <FontAwesomeIcon className="w-4 text-red-400 " icon={faFilter} />
-      Filter By
+    <form className="flex items-center gap-1 ">
+      <FontAwesomeIcon className="w-4  text-red-400" icon={faFilter} />
+      <p className="text-base-content">Filter By</p>
       <select
         onChange={handleSelect}
         value={filterType || ""}
         name="filterType"
         id="filterType"
-        className="rounded-md border border-solid border-gray-400  px-2 focus:border-gray-500 focus:outline-none"
+        className="bg-bas rounded-md border border-solid  border-gray-400 px-2 focus:border-gray-500 focus:outline-none"
       >
         <option value="location">Location</option>
         <option value="label">Label</option>

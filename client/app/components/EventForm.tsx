@@ -16,6 +16,7 @@ import {
   getEventById,
   updateEventById,
 } from "../services/event-service";
+import Timer from "./Timer";
 
 interface props {
   date: Date;
@@ -125,30 +126,6 @@ const EventForm = ({ date, event }: props) => {
         setEvents(events);
       });
 
-      // const updatedEvents = events.map((existingEvent) =>
-      //   existingEvent.id === event.id
-      //     ? {
-      //         ...data,
-      //         id: event.id,
-      //         startDate: startDate,
-      //         endDate: endDate,
-      //       }
-      //     : existingEvent,
-      // );
-
-      // setEvent((prevEvent) => {
-      //   if (prevEvent && prevEvent.id === event.id) {
-      //     return {
-      //       ...data,
-      //       id: event.id,
-      //       startDate: startDate,
-      //       endDate: endDate,
-      //     };
-      //   }
-      //   return prevEvent;
-      // });
-
-      // setEvents(updatedEvents);
       setShowEdit(!showEdit);
       setShowEvent(!showEvent);
     } else {
@@ -175,13 +152,14 @@ const EventForm = ({ date, event }: props) => {
           id="name"
           type="text"
           {...register("name")}
-          className="rounded-md border border-solid border-gray-400  px-2 focus:border-gray-500 focus:outline-none"
+          className="rounded-md border border-solid border-gray-400 px-2  text-base-content focus:border-gray-500 focus:outline-none"
         />
         {errors.name && <p className="text-red-500">{errors.name.message}</p>}
       </div>
       <div className="flex flex-col">
         <label htmlFor="startDate">Start Date</label>
         <input
+          className="text-base-content"
           id="startDate"
           type="datetime-local"
           {...register("startDate")}
@@ -191,7 +169,12 @@ const EventForm = ({ date, event }: props) => {
       </div>
       <div className="flex flex-col">
         <label htmlFor="endDate">End Date</label>
-        <input id="endDate" type="datetime-local" {...register("endDate")} />
+        <input
+          className="text-base-content"
+          id="endDate"
+          type="datetime-local"
+          {...register("endDate")}
+        />
         {dateError && <p className="text-red-500">{dateError}</p>}
       </div>
       <div className="flex flex-col">
@@ -200,7 +183,7 @@ const EventForm = ({ date, event }: props) => {
           id="location"
           type="text"
           {...register("location")}
-          className="rounded-md border border-solid border-gray-400  px-2 focus:border-gray-500 focus:outline-none"
+          className="rounded-md border border-solid border-gray-400 px-2  text-base-content focus:border-gray-500 focus:outline-none"
         />
         {errors.location && (
           <p className="text-red-500">{errors.location.message}</p>
@@ -212,11 +195,11 @@ const EventForm = ({ date, event }: props) => {
           id="label"
           type="text"
           {...register("label")}
-          className="rounded-md border border-solid border-gray-400  px-2 focus:border-gray-500 focus:outline-none"
+          className="rounded-md border border-solid border-gray-400 px-2  text-base-content focus:border-gray-500 focus:outline-none"
         />
         {errors.label && <p className="text-red-500">{errors.label.message}</p>}
       </div>
-      <button className="" type="submit">
+      <button className="btn" type="submit">
         Save
       </button>
     </form>

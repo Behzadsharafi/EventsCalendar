@@ -2,17 +2,14 @@
 import { useContext, useState } from "react";
 import { dateObject, generateCalendar } from "../utils/generateCalendar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faArrowRight,
-  faArrowLeft,
-  faFilter,
-} from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import Modal from "./Modal";
 import Event from "./Event";
 import EventForm from "./EventForm";
 import { EventType } from "../utils/interfaces";
 import { EventsContext } from "../context/EventsContextProvider";
 import Filter from "./Filter";
+import ThemeController from "./ThemeController";
 
 const Calendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -81,10 +78,10 @@ const Calendar = () => {
 
   return (
     <>
-      <div className=" flex w-3/5 flex-col gap-y-10  ">
+      <div className=" flex w-11/12 max-w-3xl flex-col gap-y-10  ">
         <section className="flex items-center justify-between">
           <div className="flex w-48 items-center justify-between ">
-            <p className=" min-w-32 select-none">
+            <p className=" min-w-32 select-none text-base-content">
               {currentDate.toLocaleString("default", {
                 month: "long",
                 year: "numeric",
@@ -92,12 +89,12 @@ const Calendar = () => {
             </p>
             <div className="flex gap-3 ">
               <FontAwesomeIcon
-                className="w-4 transform cursor-pointer transition-all duration-300 hover:scale-110"
+                className="w-4 transform cursor-pointer text-base-content transition-all duration-300 hover:scale-110"
                 onClick={handlePreviousMonth}
                 icon={faArrowLeft}
               />
               <FontAwesomeIcon
-                className="w-4 transform cursor-pointer transition-all duration-300 hover:scale-110"
+                className="w-4 transform cursor-pointer text-base-content transition-all duration-300 hover:scale-110"
                 onClick={handleNextMonth}
                 icon={faArrowRight}
               />
@@ -112,18 +109,21 @@ const Calendar = () => {
             {dateFormat.format(new Date())}
           </p>
         </section>
+        <div className="flex items-center justify-between  ">
+          <Filter />
 
-        <Filter />
-        <ul className="w-100  grid select-none grid-cols-7">
+          <ThemeController />
+        </div>
+        <ul className="w-100  grid select-none grid-cols-7 text-base-content ">
           {daysOfWeek.map((day) => (
             <li key={day}>{day}</li>
           ))}
         </ul>
-        <ul className="w-100 grid grid-cols-7 ">
+        <ul className="w-100 grid grid-cols-7 gap-x-1">
           {daysArray.map((day) => (
             <li
               onClick={() => handleDateClick(day)}
-              className={`${"h-28 select-none border-t border-t-gray-400 hover:bg-red-100 hover:shadow-md "} ${
+              className={`${"h-28 select-none overflow-y-auto overflow-x-hidden border-t border-t-gray-400 text-base-content hover:bg-base-200 hover:shadow-md"} ${
                 day.currentMonth ? "" : "text-gray-400"
               } ${
                 day.date.toLocaleDateString() ===
@@ -140,15 +140,15 @@ const Calendar = () => {
             >
               {day.date.getDate()}
 
-              <ul>
+              <ul className="flex flex-col items-start gap-1 ">
                 {events.map((event, index) => {
                   return new Date(event.startDate).toLocaleDateString() ===
                     day.date.toLocaleDateString() ? (
                     <li
-                      className="z-30 w-11/12 transform cursor-pointer rounded-sm  bg-red-200 px-1 transition-all duration-300 hover:scale-95 hover:bg-red-300"
+                      className="btn btn-accent btn-sm text-xs "
                       key={index}
                       onClick={(e) => {
-                        e.stopPropagation(); // Stop propagation here
+                        e.stopPropagation();
                         handleEventClick(event);
                       }}
                     >

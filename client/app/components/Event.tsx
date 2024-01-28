@@ -1,9 +1,11 @@
+"use client";
 import React, { useContext, useEffect, useState } from "react";
 import { EventType } from "../utils/interfaces";
 import { EventsContext } from "../context/EventsContextProvider";
 import { deleteEventById, getAllEvents } from "../services/event-service";
+import Timer from "./Timer";
 
-interface TimeRemaining {
+export interface TimeRemaining {
   days: number;
   hours: number;
   minutes: number;
@@ -13,8 +15,7 @@ interface TimeRemaining {
 interface props {
   event: EventType | null;
 }
-
-const timeUntil = (targetDate: Date): TimeRemaining => {
+const timeUntil2 = (targetDate: Date): TimeRemaining => {
   const currentDate = new Date();
   const differenceInMillis = targetDate.getTime() - currentDate.getTime();
   const days = Math.floor(differenceInMillis / (1000 * 60 * 60 * 24));
@@ -34,10 +35,13 @@ const timeUntil = (targetDate: Date): TimeRemaining => {
   };
 };
 
+const timeUntil = (targetDate: Date): number => {
+  return targetDate.getTime() - new Date().getTime();
+};
+
 const Event = ({ event }: props) => {
-  const [remainingTime, setRemainingTime] = useState<TimeRemaining | null>(
-    null,
-  );
+  const [remainingTime, setRemainingTime] = useState<number>(0);
+
   const [eventIsPast, setEventIsPast] = useState(false);
   const { setShowEvent, setShowEdit, showEvent, showEdit, setEvents } =
     useContext(EventsContext);
@@ -78,28 +82,37 @@ const Event = ({ event }: props) => {
     });
     setShowEvent(false);
   };
-
   return (
-    <div>
-      <h2>{event?.name}</h2>
-      <p>{event ? dateFormat.format(new Date(event.startDate)) : ""}</p>
-      <p>{event ? dateFormat.format(new Date(event.endDate)) : ""}</p>
-      <p>{event?.location}</p>
-      <p>{event?.label}</p>
-      {eventIsPast ? (
-        <p>The event has already occurred.</p>
-      ) : (
+    <div className="flex flex-col gap-3">
+      <section className="flex flex-col gap-2">
+        <h2 className="font-extrabold text-primary">{event?.name}</h2>
         <p>
-          Event starts in{" "}
-          {remainingTime?.days !== undefined ? remainingTime.days : "0"} days{" "}
-          {`${remainingTime?.hours || "0"}`} hours{" "}
-          {`${remainingTime?.minutes || "0"}`} minutes{" "}
-          {`${remainingTime?.seconds || "0"}`} seconds
+          <span className="font-bold">Starts: </span>
+          {event ? dateFormat.format(new Date(event.startDate)) : ""}
         </p>
-      )}
-      <div>
+        <p>
+          {" "}
+          <span className="font-bold">Ends:</span>{" "}
+          {event ? dateFormat.format(new Date(event.endDate)) : ""}
+        </p>
+        <p>
+          {" "}
+          <span className="font-bold">Location: </span> {event?.location}
+        </p>
+        <p>
+          {" "}
+          <span className="font-bold">Label:</span> {event?.label}
+        </p>
+        {eventIsPast ? (
+          <p className="text-red-500">The event has already occurred.</p>
+        ) : (
+          <Timer remainingTime={remainingTime} event={event} />
+        )}
+      </section>
+
+      <div className="flex gap-1">
         <button
-          className="btn"
+          className="btn "
           onClick={() => {
             if (event) return handleEditEvent(event);
           }}

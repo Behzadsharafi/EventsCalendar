@@ -27,8 +27,6 @@ const Filter = () => {
 
   useEffect(() => {
     getAllEvents().then((prevEvents) => {
-      // setEvents(prevEvents);
-
       if (filterType === "label") {
         const labels: string[] = [];
         prevEvents.forEach((event) => {
@@ -49,13 +47,6 @@ const Filter = () => {
     });
   }, [events, filterType]);
 
-  // useEffect(() => {
-  //   if (filterValue === "" && filterType !== null) {
-  //     setFilterValue("");
-  //     setEvents(dummyEvents);
-  //   }
-  // }, [filterValue]);
-
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFilterValue(e.target.value);
   };
@@ -70,7 +61,7 @@ const Filter = () => {
 
   return (
     <form className="flex items-center gap-1 ">
-      <FontAwesomeIcon className="w-4  text-red-400" icon={faFilter} />
+      <FontAwesomeIcon className="  w-4 text-accent" icon={faFilter} />
       <p className="text-base-content">Filter By</p>
       <select
         onChange={handleSelect}

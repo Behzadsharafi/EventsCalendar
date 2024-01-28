@@ -81,7 +81,7 @@ const Calendar = () => {
       <div className=" flex w-11/12 max-w-3xl flex-col gap-y-10  ">
         <section className="flex items-center justify-between">
           <div className="flex w-48 items-center justify-between ">
-            <p className=" min-w-32 select-none text-base-content">
+            <p className=" min-w-32 select-none text-base-content ">
               {currentDate.toLocaleString("default", {
                 month: "long",
                 year: "numeric",
@@ -104,7 +104,7 @@ const Calendar = () => {
             onClick={() => {
               setCurrentDate(new Date());
             }}
-            className="cursor-pointer select-none text-blue-500 hover:text-gray-500"
+            className="btn btn-outline btn-primary btn-sm select-none "
           >
             {dateFormat.format(new Date())}
           </p>
@@ -123,12 +123,12 @@ const Calendar = () => {
           {daysArray.map((day) => (
             <li
               onClick={() => handleDateClick(day)}
-              className={`${"h-28 select-none overflow-y-auto overflow-x-hidden border-t border-t-gray-400 text-base-content hover:bg-base-200 hover:shadow-md"} ${
-                day.currentMonth ? "" : "text-gray-400"
+              className={`${" h-28 select-none overflow-y-auto overflow-x-hidden border-t border-t-gray-400  font-bold text-base-content hover:bg-base-200 hover:shadow-md "} ${
+                day.currentMonth ? "" : "bg-base font-light"
               } ${
                 day.date.toLocaleDateString() ===
                 new Date().toLocaleDateString()
-                  ? "bg-blue-100 text-red-600"
+                  ? "bg-base-300 text-error"
                   : ""
               } ${
                 //This part is because my love's birthday is 13th of August and she loves yellow!

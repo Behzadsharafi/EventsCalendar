@@ -145,8 +145,11 @@ const EventForm = ({ date, event }: props) => {
   };
 
   return (
-    <form className="flex flex-col gap-3" onSubmit={handleSubmit(formSubmit)}>
-      <div className="flex flex-col ">
+    <form
+      className="flex min-w-80 flex-col gap-3 "
+      onSubmit={handleSubmit(formSubmit)}
+    >
+      <div className="flex flex-col text-base-content">
         <label htmlFor="name">Title:</label>
         <input
           id="name"
@@ -156,10 +159,10 @@ const EventForm = ({ date, event }: props) => {
         />
         {errors.name && <p className="text-red-500">{errors.name.message}</p>}
       </div>
-      <div className="flex flex-col">
+      <div className="flex flex-col text-base-content">
         <label htmlFor="startDate">Start Date</label>
         <input
-          className="text-base-content"
+          className="rounded-md border border-solid border-gray-400 px-2  text-base-content focus:border-gray-500 focus:outline-none"
           id="startDate"
           type="datetime-local"
           {...register("startDate")}
@@ -167,17 +170,17 @@ const EventForm = ({ date, event }: props) => {
 
         {dateError && <p className="text-red-500">{dateError}</p>}
       </div>
-      <div className="flex flex-col">
+      <div className="flex flex-col text-base-content">
         <label htmlFor="endDate">End Date</label>
         <input
-          className="text-base-content"
+          className="rounded-md border border-solid border-gray-400 px-2  text-base-content focus:border-gray-500 focus:outline-none"
           id="endDate"
           type="datetime-local"
           {...register("endDate")}
         />
         {dateError && <p className="text-red-500">{dateError}</p>}
       </div>
-      <div className="flex flex-col">
+      <div className="flex flex-col text-base-content">
         <label htmlFor="location">Location:</label>
         <input
           id="location"
@@ -189,7 +192,7 @@ const EventForm = ({ date, event }: props) => {
           <p className="text-red-500">{errors.location.message}</p>
         )}
       </div>
-      <div className="flex flex-col">
+      <div className="flex flex-col text-base-content">
         <label htmlFor="label">Label:</label>
         <input
           id="label"

@@ -37,15 +37,7 @@ const ThemeController = () => {
             value="retro"
           />
         </li>
-        <li>
-          <input
-            type="radio"
-            name="theme-dropdown"
-            className="theme-controller btn btn-ghost btn-sm btn-block justify-start text-base-content"
-            aria-label="Cyberpunk"
-            value="cyberpunk"
-          />
-        </li>
+
         <li>
           <input
             type="radio"
@@ -55,15 +47,7 @@ const ThemeController = () => {
             value="valentine"
           />
         </li>
-        <li>
-          <input
-            type="radio"
-            name="theme-dropdown"
-            className="theme-controller btn btn-ghost btn-sm btn-block justify-start text-base-content"
-            aria-label="Aqua"
-            value="aqua"
-          />
-        </li>
+
         <li>
           <input
             type="radio"
@@ -100,24 +84,7 @@ const ThemeController = () => {
             value="winter"
           />
         </li>
-        <li>
-          <input
-            type="radio"
-            name="theme-dropdown"
-            className="theme-controller btn btn-ghost btn-sm btn-block justify-start text-base-content"
-            aria-label="Coffee"
-            value="coffee"
-          />
-        </li>
-        <li>
-          <input
-            type="radio"
-            name="theme-dropdown"
-            className="theme-controller btn btn-ghost btn-sm btn-block justify-start text-base-content"
-            aria-label="Night"
-            value="night"
-          />
-        </li>
+
         <li>
           <input
             type="radio"
@@ -127,15 +94,7 @@ const ThemeController = () => {
             value="lemonade"
           />
         </li>
-        <li>
-          <input
-            type="radio"
-            name="theme-dropdown"
-            className="theme-controller btn btn-ghost btn-sm btn-block justify-start text-base-content"
-            aria-label="Acid"
-            value="acid"
-          />
-        </li>
+
         <li>
           <input
             type="radio"
@@ -154,87 +113,7 @@ const ThemeController = () => {
             value="autumn"
           />
         </li>
-        <li>
-          <input
-            type="radio"
-            name="theme-dropdown"
-            className="theme-controller btn btn-ghost btn-sm btn-block justify-start text-base-content"
-            aria-label="Cmyk"
-            value="cmyk"
-          />
-        </li>
-        <li>
-          <input
-            type="radio"
-            name="theme-dropdown"
-            className="theme-controller btn btn-ghost btn-sm btn-block justify-start text-base-content"
-            aria-label="Dracula"
-            value="dracula"
-          />
-        </li>
-        <li>
-          <input
-            type="radio"
-            name="theme-dropdown"
-            className="theme-controller btn btn-ghost btn-sm btn-block justify-start text-base-content"
-            aria-label="Luxury"
-            value="luxury"
-          />
-        </li>
-        <li>
-          <input
-            type="radio"
-            name="theme-dropdown"
-            className="theme-controller btn btn-ghost btn-sm btn-block justify-start text-base-content"
-            aria-label="Black"
-            value="black"
-          />
-        </li>
-        <li>
-          <input
-            type="radio"
-            name="theme-dropdown"
-            className="theme-controller btn btn-ghost btn-sm btn-block justify-start text-base-content"
-            aria-label="Wireframe"
-            value="wireframe"
-          />
-        </li>
-        <li>
-          <input
-            type="radio"
-            name="theme-dropdown"
-            className="theme-controller btn btn-ghost btn-sm btn-block justify-start text-base-content"
-            aria-label="Fantasy"
-            value="fantasy"
-          />
-        </li>
-        <li>
-          <input
-            type="radio"
-            name="theme-dropdown"
-            className="theme-controller btn btn-ghost btn-sm btn-block justify-start text-base-content"
-            aria-label="Pastel"
-            value="pastel"
-          />
-        </li>
-        <li>
-          <input
-            type="radio"
-            name="theme-dropdown"
-            className="theme-controller btn btn-ghost btn-sm btn-block justify-start text-base-content"
-            aria-label="Lofi"
-            value="lofi"
-          />
-        </li>
-        <li>
-          <input
-            type="radio"
-            name="theme-dropdown"
-            className="theme-controller btn btn-ghost btn-sm btn-block justify-start text-base-content"
-            aria-label="Forest"
-            value="forest"
-          />
-        </li>
+
         <li>
           <input
             type="radio"
@@ -244,78 +123,7 @@ const ThemeController = () => {
             value="garden"
           />
         </li>
-        <li>
-          <input
-            type="radio"
-            name="theme-dropdown"
-            className="theme-controller btn btn-ghost btn-sm btn-block justify-start text-base-content"
-            aria-label="Halloween"
-            value="halloween"
-          />
-        </li>
-        <li>
-          <input
-            type="radio"
-            name="theme-dropdown"
-            className="theme-controller btn btn-ghost btn-sm btn-block justify-start text-base-content"
-            aria-label="Valentine"
-            value="valentine"
-          />
-        </li>
-        <li>
-          <input
-            type="radio"
-            name="theme-dropdown"
-            className="theme-controller btn btn-ghost btn-sm btn-block justify-start text-base-content"
-            aria-label="Cyberpunk"
-            value="cyberpunk"
-          />
-        </li>
-        <li>
-          <input
-            type="radio"
-            name="theme-dropdown"
-            className="theme-controller btn btn-ghost btn-sm btn-block justify-start text-base-content"
-            aria-label="Synthwave"
-            value="synthwave"
-          />
-        </li>
-        <li>
-          <input
-            type="radio"
-            name="theme-dropdown"
-            className="theme-controller btn btn-ghost btn-sm btn-block justify-start text-base-content"
-            aria-label="Corporate"
-            value="corporate"
-          />
-        </li>
-        <li>
-          <input
-            type="radio"
-            name="theme-dropdown"
-            className="theme-controller btn btn-ghost btn-sm btn-block justify-start text-base-content"
-            aria-label="Emerald"
-            value="emerald"
-          />
-        </li>
-        <li>
-          <input
-            type="radio"
-            name="theme-dropdown"
-            className="theme-controller btn btn-ghost btn-sm btn-block justify-start text-base-content"
-            aria-label="Bumblebee"
-            value="bumblebee"
-          />
-        </li>
-        <li>
-          <input
-            type="radio"
-            name="theme-dropdown"
-            className="theme-controller btn btn-ghost btn-sm btn-block justify-start text-base-content"
-            aria-label="Cupcake"
-            value="cupcake"
-          />
-        </li>
+
         <li>
           <input
             type="radio"
@@ -323,15 +131,6 @@ const ThemeController = () => {
             className="theme-controller btn btn-ghost btn-sm btn-block justify-start text-base-content"
             aria-label="Dark"
             value="dark"
-          />
-        </li>
-        <li>
-          <input
-            type="radio"
-            name="theme-dropdown"
-            className="theme-controller btn btn-ghost btn-sm btn-block justify-start text-base-content"
-            aria-label="Light"
-            value="light"
           />
         </li>
       </ul>

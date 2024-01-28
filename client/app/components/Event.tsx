@@ -84,22 +84,22 @@ const Event = ({ event }: props) => {
   };
   return (
     <div className="flex flex-col gap-3">
-      <section className="flex flex-col gap-2">
-        <h2 className="font-extrabold text-primary">{event?.name}</h2>
-        <p>
+      <section className="flex flex-col gap-2 ">
+        <h2 className="font-extrabold text-primary ">{event?.name}</h2>
+        <p className="text-base-content">
           <span className="font-bold">Starts: </span>
           {event ? dateFormat.format(new Date(event.startDate)) : ""}
         </p>
-        <p>
+        <p className="text-base-content">
           {" "}
           <span className="font-bold">Ends:</span>{" "}
           {event ? dateFormat.format(new Date(event.endDate)) : ""}
         </p>
-        <p>
+        <p className="text-base-content">
           {" "}
           <span className="font-bold">Location: </span> {event?.location}
         </p>
-        <p>
+        <p className="text-base-content">
           {" "}
           <span className="font-bold">Label:</span> {event?.label}
         </p>

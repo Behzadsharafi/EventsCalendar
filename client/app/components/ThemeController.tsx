@@ -53,15 +53,6 @@ const ThemeController = () => {
             type="radio"
             name="theme-dropdown"
             className="theme-controller btn btn-ghost btn-sm btn-block justify-start text-base-content"
-            aria-label="Sunset"
-            value="sunset"
-          />
-        </li>
-        <li>
-          <input
-            type="radio"
-            name="theme-dropdown"
-            className="theme-controller btn btn-ghost btn-sm btn-block justify-start text-base-content"
             aria-label="Nord"
             value="nord"
           />
@@ -73,15 +64,6 @@ const ThemeController = () => {
             className="theme-controller btn btn-ghost btn-sm btn-block justify-start text-base-content"
             aria-label="Dim"
             value="dim"
-          />
-        </li>
-        <li>
-          <input
-            type="radio"
-            name="theme-dropdown"
-            className="theme-controller btn btn-ghost btn-sm btn-block justify-start text-base-content"
-            aria-label="Winter"
-            value="winter"
           />
         </li>
 

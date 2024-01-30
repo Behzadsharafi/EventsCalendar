@@ -16,38 +16,42 @@ const Timer = ({ remainingTime, event }: props) => {
   });
 
   useEffect(() => {
-    const currentDate = new Date().getTime();
-    const targetDate = new Date(event.startDate).getTime();
-    const time = Math.ceil((targetDate - currentDate) / 1000);
-    const seconds = time % 60;
-    const minutes = Math.floor(time / 60) % 60;
-    const hours = Math.floor(time / 3600) % 24;
-    const days = Math.floor(time / 86400);
-    setInitial({
-      days,
-      hours,
-      minutes,
-      seconds,
-    });
-  }, []);
-
-  useEffect(() => {
-    let previousTimeBetweenDates;
-
-    const intervalId = setInterval(() => {
+    if (event) {
       const currentDate = new Date().getTime();
       const targetDate = new Date(event.startDate).getTime();
-      const timeBetweenDates = Math.ceil((targetDate - currentDate) / 1000);
+      const time = Math.ceil((targetDate - currentDate) / 1000);
+      const seconds = time % 60;
+      const minutes = Math.floor(time / 60) % 60;
+      const hours = Math.floor(time / 3600) % 24;
+      const days = Math.floor(time / 86400);
+      setInitial({
+        days,
+        hours,
+        minutes,
+        seconds,
+      });
+    }
+  }, [event]);
 
-      flipAllCards(timeBetweenDates);
+  useEffect(() => {
+    if (event) {
+      let previousTimeBetweenDates;
 
-      previousTimeBetweenDates = timeBetweenDates;
-    }, 250);
+      const intervalId = setInterval(() => {
+        const currentDate = new Date().getTime();
+        const targetDate = new Date(event.startDate).getTime();
+        const timeBetweenDates = Math.ceil((targetDate - currentDate) / 1000);
 
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, []);
+        flipAllCards(timeBetweenDates);
+
+        previousTimeBetweenDates = timeBetweenDates;
+      }, 250);
+
+      return () => {
+        clearInterval(intervalId);
+      };
+    }
+  }, [event]);
 
   const flipAllCards = (time: number) => {
     const seconds = time % 60;

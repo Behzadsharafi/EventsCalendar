@@ -83,7 +83,11 @@ const Timer = ({ remainingTime, event }: props) => {
     }
     const topHalf = flipCard.querySelector(".top");
 
-    const startNumber = parseInt(topHalf.textContent);
+    if (!topHalf) {
+      console.error("topHalf is null");
+      return;
+    }
+    const startNumber = parseInt(topHalf.textContent || "0", 10);
     if (newNumber === startNumber) return;
 
     const bottomHalf = flipCard.querySelector(".bottom");
@@ -92,19 +96,23 @@ const Timer = ({ remainingTime, event }: props) => {
     const bottomFlip = document.createElement("div");
     bottomFlip.classList.add("bottom-flip");
 
-    top.textContent = startNumber;
-    bottomHalf.textContent = startNumber;
-    topFlip.textContent = startNumber;
-    bottomFlip.textContent = newNumber;
+    topHalf.textContent = startNumber.toString();
+    if (!bottomHalf) {
+      console.error("bottomHalf is null");
+      return;
+    }
+    bottomHalf.textContent = startNumber.toString();
+    topFlip.textContent = startNumber.toString();
+    bottomFlip.textContent = newNumber.toString();
 
     topFlip.addEventListener("animationstart", (e) => {
-      topHalf.textContent = newNumber;
+      topHalf.textContent = newNumber.toString();
     });
     topFlip.addEventListener("animationend", (e) => {
       topFlip.remove();
     });
     bottomFlip.addEventListener("animationend", (e) => {
-      bottomHalf.textContent = newNumber;
+      bottomHalf.textContent = newNumber.toString();
       bottomFlip.remove();
     });
     flipCard.append(topFlip, bottomFlip);

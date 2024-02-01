@@ -4,7 +4,8 @@ import {
   UpdateEventDTO,
 } from "./../utils/interfaces";
 
-const hostDomain = `http://localhost:8080/`;
+// const hostDomain = `http://localhost:8080/`;
+const hostDomain = `https://zadcalendar.store/`;
 
 export const getAllEvents = async (): Promise<EventType[]> => {
   const response = await fetch(`${hostDomain}events`);

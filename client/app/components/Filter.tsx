@@ -60,9 +60,12 @@ const Filter = () => {
   };
 
   return (
-    <form className="flex items-center gap-1 ">
-      <FontAwesomeIcon className="  w-4 text-accent" icon={faFilter} />
-      <p className="text-base-content">Filter By</p>
+    <form className="flex flex-col items-start gap-2 sm:flex-row sm:items-center">
+      <div className="flex items-center gap-1 ">
+        <FontAwesomeIcon className="  w-4 text-accent" icon={faFilter} />
+        <p className="text-base-content">Filter By</p>
+      </div>
+
       <select
         onChange={handleSelect}
         value={filterType || ""}
@@ -87,21 +90,6 @@ const Filter = () => {
           </option>
         ))}
       </select>
-      {/* <div className="flex w-40  items-center rounded-md border border-solid border-gray-400  px-2 focus:border-gray-500 ">
-        <input
-          type="text"
-          className="min-w-1 focus:outline-none "
-          onChange={handleSearchChange}
-          value={filterValue || ""}
-        />
-        <button
-          onClick={onSearch}
-          type="submit"
-          className=" w-7 transform cursor-pointer transition-all duration-300 hover:scale-110"
-        >
-          <FontAwesomeIcon icon={faMagnifyingGlass} className=" w-auto" />
-        </button>
-      </div> */}
     </form>
   );
 };

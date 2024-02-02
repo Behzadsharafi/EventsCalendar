@@ -1,5 +1,5 @@
 "use client";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { dateObject, generateCalendar } from "../utils/generateCalendar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
@@ -14,6 +14,7 @@ import ThemeController from "./ThemeController";
 const Calendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [modalDate, setModalDate] = useState(new Date());
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 650);
 
   const {
     events,
@@ -27,19 +28,31 @@ const Calendar = () => {
     setShowEdit,
   } = useContext(EventsContext);
 
-  const daysOfWeek: string[] = [
-    "Mon",
-    "Tue",
-    "Wed",
-    "Thur",
-    "Fri",
-    "Sat",
-    "Sun",
-  ];
+  const daysOfWeek: string[] = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
 
   const dateFormat = new Intl.DateTimeFormat("en-au", {
     dateStyle: "full",
   });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth <= 650);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const truncateText = (text: string, maxLength: number) => {
+    if (text.length <= maxLength) {
+      return text;
+    }
+    const truncatedText = text.substring(0, maxLength).trim();
+    return `${truncatedText}...`;
+  };
 
   dateFormat.format(new Date());
 
@@ -78,8 +91,8 @@ const Calendar = () => {
 
   return (
     <>
-      <div className=" flex w-11/12 max-w-3xl flex-col gap-y-10  ">
-        <section className="flex items-center justify-between">
+      <div className=" flex w-11/12 max-w-3xl flex-col gap-y-6 sm:gap-y-10  ">
+        <section className="flex flex-col  items-start justify-between gap-3 sm:flex-row sm:items-center">
           <div className="flex w-48 items-center justify-between ">
             <p className=" min-w-32 select-none text-base-content ">
               {currentDate.toLocaleString("default", {
@@ -145,14 +158,14 @@ const Calendar = () => {
                   return new Date(event.startDate).toLocaleDateString() ===
                     day.date.toLocaleDateString() ? (
                     <li
-                      className="btn btn-accent btn-sm text-xs "
+                      className="btn btn-accent btn-sm  px-1 text-left text-xs"
                       key={index}
                       onClick={(e) => {
                         e.stopPropagation();
                         handleEventClick(event);
                       }}
                     >
-                      {event.name}
+                      {isSmallScreen ? truncateText(event.name, 2) : event.name}
                     </li>
                   ) : null;
                 })}

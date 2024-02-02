@@ -10,11 +10,11 @@ import { EventType } from "../utils/interfaces";
 import { EventsContext } from "../context/EventsContextProvider";
 import Filter from "./Filter";
 import ThemeController from "./ThemeController";
+import dynamic from "next/dynamic";
 
 const Calendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [modalDate, setModalDate] = useState(new Date());
-  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 650);
 
   const {
     events,
@@ -33,30 +33,6 @@ const Calendar = () => {
   const dateFormat = new Intl.DateTimeFormat("en-au", {
     dateStyle: "full",
   });
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setIsSmallScreen(window.innerWidth <= 500);
-
-      const handleResize = () => {
-        setIsSmallScreen(window.innerWidth <= 500);
-      };
-
-      window.addEventListener("resize", handleResize);
-
-      return () => {
-        window.removeEventListener("resize", handleResize);
-      };
-    }
-  }, []);
-
-  const truncateText = (text: string, maxLength: number) => {
-    if (text.length <= maxLength) {
-      return text;
-    }
-    const truncatedText = text.substring(0, maxLength).trim();
-    return `${truncatedText}...`;
-  };
 
   dateFormat.format(new Date());
 
@@ -169,7 +145,7 @@ const Calendar = () => {
                         handleEventClick(event);
                       }}
                     >
-                      {isSmallScreen ? truncateText(event.name, 2) : event.name}
+                      <span className="truncate-text">{event.name}</span>
                     </li>
                   ) : null;
                 })}

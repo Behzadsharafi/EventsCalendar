@@ -25,6 +25,19 @@ body {
 }
 
 @layer utilities {
+  .truncate-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  @media (max-width: 500px) {
+    .truncate-text {
+      display: inline-block; /* Ensure it's displayed as a block to apply width */
+      max-width: 3em; /* Adjust this value based on the number of characters you want to show */
+    }
+  }
+
   .flip-card {
     position: relative;
     display: inline-flex;

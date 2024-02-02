@@ -35,15 +35,19 @@ const Calendar = () => {
   });
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsSmallScreen(window.innerWidth <= 650);
-    };
+    if (typeof window !== "undefined") {
+      setIsSmallScreen(window.innerWidth <= 500);
 
-    window.addEventListener("resize", handleResize);
+      const handleResize = () => {
+        setIsSmallScreen(window.innerWidth <= 500);
+      };
 
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
+      window.addEventListener("resize", handleResize);
+
+      return () => {
+        window.removeEventListener("resize", handleResize);
+      };
+    }
   }, []);
 
   const truncateText = (text: string, maxLength: number) => {

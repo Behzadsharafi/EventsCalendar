@@ -102,7 +102,7 @@ const Calendar = () => {
             {dateFormat.format(new Date())}
           </p>
         </section>
-        <div className="flex items-center justify-between  ">
+        <div className="flex  justify-between  ">
           <Filter />
 
           <ThemeController />

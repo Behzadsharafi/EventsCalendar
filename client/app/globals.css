@@ -26,15 +26,15 @@ body {
 
 @layer utilities {
   .truncate-text {
-    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
-  @media (max-width: 500px) {
+  @media (max-width: 600px) {
     .truncate-text {
-      display: inline-block; /* Ensure it's displayed as a block to apply width */
-      max-width: 3em; /* Adjust this value based on the number of characters you want to show */
+      white-space: nowrap;
+      display: inline-block;
+      max-width: 2em;
     }
   }
 
@@ -46,6 +46,12 @@ body {
     border-radius: 0.1em;
     font-size: 30px;
     min-width: 35px;
+  }
+  @media (max-width: 450px) {
+    .flip-card {
+      font-size: 20px;
+      min-width: 25px;
+    }
   }
 
   .top,
@@ -123,5 +129,11 @@ body {
 
   .segment-title {
     font-size: 1rem;
+  }
+
+  @media (max-width: 450px) {
+    .segment-title {
+      font-size: 0.9rem;
+    }
   }
 }

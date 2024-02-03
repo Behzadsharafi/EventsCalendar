@@ -46,6 +46,7 @@ body {
     border-radius: 0.1em;
     font-size: 30px;
     min-width: 35px;
+    color: black;
   }
   @media (max-width: 450px) {
     .flip-card {
@@ -101,7 +102,6 @@ body {
     animation: flip-bottom 250ms ease-out 250ms;
     transform-origin: top;
     transform: rotateX(90deg);
-    color: black;
   }
 
   @keyframes flip-bottom {

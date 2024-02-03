@@ -101,6 +101,7 @@ body {
     animation: flip-bottom 250ms ease-out 250ms;
     transform-origin: top;
     transform: rotateX(90deg);
+    color: black;
   }
 
   @keyframes flip-bottom {

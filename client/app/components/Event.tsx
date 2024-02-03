@@ -83,7 +83,7 @@ const Event = ({ event }: props) => {
     setShowEvent(false);
   };
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3 ">
       <section className="flex flex-col gap-2 ">
         <h2 className="font-extrabold text-primary ">{event?.name}</h2>
         <p className="text-base-content">

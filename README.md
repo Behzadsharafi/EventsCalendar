@@ -1,8 +1,9 @@
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Behzadsharafi/EmployeeCreator/blob/main/LICENSE)
+[![Tests Passing](https://github.com/Behzadsharafi/EventsCalendar/actions/workflows/test.yml/badge.svg)](https://github.com/Behzadsharafi/EventsCalendar/actions/workflows/test.yml)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Behzadsharafi/EventsCalendar/blob/main/LICENSE)
 
 <div align='center'>
 
-<h1> :date:  Employee Management System :calendar: </h1>
+<h1> :date:  Events Calendar :calendar: </h1>
 <p>A full-stack calendar app that allows the user to create and manage events in a calendar. The backend is in Spring Boot, and MySQL, and the frontend is in Next.js, Tailwind and TypeScript.</p>
 
 <h4><a href="https://events-calendar-five.vercel.app/">View Live Site</a> <span> ·  <a href="https://github.com/Behzadsharafi/EventsCalendar/issues"> Report a Bug </a> <span> · </span> <a href="https://github.com/Behzadsharafi/EventsCalendar/issues"> Request a Feature </a> </h4>
